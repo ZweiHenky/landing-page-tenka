@@ -2,5 +2,8 @@
   "buildCommand": "astro build",
   "outputDirectory": "dist",
   "framework": "astro",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "rewrites": [
+    { "source": "/.well-known/assetlinks.json", "destination": "/assetlinks.json" }
+  ]
 }
