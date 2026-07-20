@@ -4,7 +4,7 @@ import react from "@astrojs/react"
 import vercel from "@astrojs/vercel"
 
 export default defineConfig({
-  site: "https://tenka.app",
+  site: "https://tenka.studio",
   output: "static",
   vite: {
     plugins: [tailwindcss()],
