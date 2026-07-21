@@ -1,6 +1,9 @@
 {
   "framework": "astro",
   "rewrites": [
+    { "source": "/liga/:path*", "destination": "/liga" },
+    { "source": "/equipo/:path*", "destination": "/equipo" },
+    { "source": "/arbitro", "destination": "/arbitro" },
     { "source": "/.well-known/assetlinks.json", "destination": "/assetlinks.json" }
   ]
 }

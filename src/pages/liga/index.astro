@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liga — Tenka</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Inter', sans-serif;
+        background: #090B10;
+        color: #FFFFFF;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .card {
+        background: #171C26;
+        border: 1px solid #293241;
+        border-radius: 16px;
+        padding: 32px 24px;
+        max-width: 360px;
+        width: 100%;
+        text-align: center;
+      }
+      .icon { font-size: 48px; margin-bottom: 16px; }
+      h1 { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+      p { color: #7A8598; font-size: 13px; line-height: 1.5; margin-bottom: 24px; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #4DD0E1;
+        color: #090B10;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .btn:hover { background: #7CE7F2; }
+      .store-link {
+        display: inline-block;
+        margin-top: 16px;
+        color: #4DD0E1;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .store-link:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="icon">&#9917;</div>
+      <h1>Enlace de liga</h1>
+      <p>
+        Este enlace debe abrirse en la aplicación de Tenka.
+        Si no tienes la app instalada, descárgala desde la tienda.
+      </p>
+      <a class="btn" id="openBtn">
+        Abrir en Tenka
+      </a>
+      <script>
+        const path = window.location.pathname.replace(/^\/liga\/?/, '');
+        const btn = document.getElementById('openBtn');
+        if (path) {
+          btn.href = 'tenka://liga/' + path;
+        } else {
+          btn.href = 'tenka://liga';
+        }
+      </script>
+    </div>
+  </body>
+</html>
