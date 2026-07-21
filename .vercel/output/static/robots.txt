@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tenka.studio/sitemap-index.xml
+
+# Deep links — not indexable content, just app redirects
+Disallow: /liga/
+Disallow: /equipo/
+Disallow: /arbitro
+
+# Legal pages — thin content, not for search
+Disallow: /aviso-de-privacidad/
+Disallow: /terminos-y-condiciones/

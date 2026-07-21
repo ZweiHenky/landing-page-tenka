@@ -7,10 +7,12 @@ export interface Props {
   title: string
   description: string
   ogImage?: string
+  noindex?: boolean
 }
 
-const { title, description, ogImage = "/assets/og-image.jpg" } = Astro.props
-const canonical = "https://tenka.app"
+const { title, description, ogImage = "/assets/icon.png", noindex = false } = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site).href
+const ogUrl = `${Astro.site.origin}${ogImage}`
 ---
 
 <!doctype html>
@@ -21,40 +23,79 @@ const canonical = "https://tenka.app"
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex,follow" /> : null}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="theme-color" content="#090B10" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Tenka" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={`${canonical}${ogImage}`} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1254" />
+    <meta property="og:image:height" content="1254" />
+    <meta property="og:image:alt" content="Tenka" />
     <meta property="og:locale" content="es_MX" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${canonical}${ogImage}`} />
+    <meta name="twitter:image" content={ogUrl} />
+    <meta name="twitter:image:alt" content="Tenka" />
 
     <!-- Icons -->
     <link rel="icon" type="image/png" href="/assets/icon.png" />
     <link rel="apple-touch-icon" href="/assets/icon.png" />
 
     <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Tenka",
-      "description": "Plataforma de gestión de ligas deportivas",
-      "url": canonical,
-      "applicationCategory": "SportsApplication",
-      "operatingSystem": "iOS, Android",
-      "offers": {
-        "@type": "Offer",
-        "price": "149",
-        "priceCurrency": "MXN",
-      },
-    })} />
+    {!noindex ? (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": `${Astro.site.origin}#organization`,
+            "name": "Tenka",
+            "url": Astro.site.origin,
+            "logo": `${Astro.site.origin}/assets/icon.png`,
+            "areaServed": "MX",
+            "inLanguage": "es-MX",
+          },
+          {
+            "@type": "WebSite",
+            "@id": `${Astro.site.origin}#website`,
+            "url": Astro.site.origin,
+            "name": "Tenka",
+            "publisher": { "@id": `${Astro.site.origin}#organization` },
+            "inLanguage": "es-MX",
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": `${Astro.site.origin}#application`,
+            "name": "Tenka",
+            "description": "Plataforma de gestión de ligas y torneos de fútbol",
+            "url": Astro.site.origin,
+            "applicationCategory": "SportsApplication",
+            "operatingSystem": "Android, iOS",
+            "offers": {
+              "@type": "Offer",
+              "price": "149",
+              "priceCurrency": "MXN",
+              "availability": "https://schema.org/OnlineOnly",
+            },
+            "areaServed": "MX",
+            "inLanguage": "es-MX",
+          },
+        ],
+      })} />
+    ) : null}
   </head>
   <body class="bg-black text-white antialiased">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-cyan focus:text-black focus:rounded-lg">

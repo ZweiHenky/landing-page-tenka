@@ -11,6 +11,8 @@ export default function HeroVisual() {
 
   useEffect(() => {
     setMounted(true)
+    const ssrH1 = document.getElementById('hero-h1-ssr')
+    if (ssrH1) ssrH1.remove()
     const t1 = setTimeout(() => setShowNotif(true), 1200)
     const interval = setInterval(() => {
       setShowNotif(false)
