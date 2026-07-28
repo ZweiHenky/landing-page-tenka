@@ -68,6 +68,46 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  .hero-keyword-parallax {
+    --parallax-x: 0px;
+    --parallax-y: 0px;
+    transform: translate3d(var(--parallax-x), var(--parallax-y), 0);
+    transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
+  }
+  .hero-keyword-float {
+    animation: hero-keyword-float var(--float-duration, 6s) ease-in-out var(--float-delay, 0s) infinite alternate;
+    will-change: transform;
+  }
+  .hero-keyword-drift {
+    animation: hero-keyword-drift 4.5s ease-in-out var(--drift-delay, 0s) infinite alternate;
+    will-change: transform;
+  }
+  .hero-keyword-drift-reverse {
+    animation-direction: alternate-reverse;
+  }
+  .hero-scroll-indicator > span {
+    animation: hero-scroll-dot 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes hero-keyword-float {
+  from {
+    transform: translate3d(0, calc(var(--float-distance, 8px) * -0.5), 0) rotate(calc(var(--float-rotation, 0deg) * -0.4));
+  }
+  to {
+    transform: translate3d(0, calc(var(--float-distance, 8px) * 0.5), 0) rotate(var(--float-rotation, 0deg));
+  }
+}
+
+@keyframes hero-keyword-drift {
+  from { transform: translate3d(-7px, 0, 0); }
+  to { transform: translate3d(7px, 0, 0); }
+}
+
+@keyframes hero-scroll-dot {
+  0%, 100% { transform: translateY(0); opacity: 0.45; }
+  50% { transform: translateY(10px); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -75,5 +115,11 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .hero-keyword-parallax,
+  .hero-keyword-drift,
+  .hero-keyword-float,
+  .hero-scroll-indicator > span {
+    transform: none !important;
   }
 }

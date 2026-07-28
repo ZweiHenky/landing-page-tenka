@@ -3,7 +3,6 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
 import Hero from "@/sections/Hero.astro"
 import Ecosystem from "@/sections/Ecosystem.astro"
 import UserType from "@/sections/UserType.astro"
-import Profiles from "@/sections/Profiles.astro"
 import MatchTypeSection from "@/sections/MatchTypeSection.astro"
 import SearchDemo from "@/sections/SearchDemo.astro"
 import DemoStandings from "@/sections/DemoStandings.astro"
@@ -13,17 +12,16 @@ import FinalCTA from "@/sections/FinalCTA.astro"
 ---
 
 <BaseLayout
-  title="Tenka — Gestión de ligas de fútbol | Programación, estadísticas y playoffs"
-  description="Gestiona tu liga de fútbol desde cualquier lugar. Programación automática de jornadas, estadísticas en tiempo real, playoffs y más. Hecho en México."
+  title="Tenka — Todo lo que vive tu liga, conectado a Tenka | Programación, estadísticas y playoffs"
+  description="Organiza competencias, publica jornadas y convierte cada equipo y jugador en parte de una comunidad que puede seguirse dentro y fuera de la cancha."
 >
   <Hero />
-  <Ecosystem />
+  <NarrativeScroll />
   <UserType />
-  <Profiles />
   <MatchTypeSection />
   <SearchDemo />
   <DemoStandings />
-  <NarrativeScroll />
+  <Ecosystem />
   <Pricing />
   <FinalCTA />
 </BaseLayout>

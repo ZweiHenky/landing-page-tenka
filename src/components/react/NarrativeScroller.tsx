@@ -35,6 +35,12 @@ const SCENES = [
   },
 ]
 
+const BALL_STATES = [
+  "-right-[30%] bottom-[3%] -rotate-6 opacity-[0.08] md:-right-[6%] md:bottom-[8%] md:opacity-[0.14]",
+  "-right-[24%] bottom-[7%] rotate-2 scale-105 opacity-[0.1] md:-right-[2%] md:bottom-[14%] md:opacity-[0.18]",
+  "-right-[32%] bottom-[11%] rotate-6 scale-95 opacity-[0.08] md:-right-[8%] md:bottom-[20%] md:opacity-[0.14]",
+]
+
 export default function NarrativeScroller() {
   const [activeScene, setActiveScene] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -69,9 +75,21 @@ export default function NarrativeScroller() {
   const scene = SCENES[activeScene]
 
   return (
-    <section ref={containerRef} className="relative" style={{ minHeight: `${SCENES.length * 100}vh` }}>
+    <section id="como-funciona" ref={containerRef} className="relative" style={{ minHeight: `${SCENES.length * 100}vh` }}>
       <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12 w-full">
+        <img
+          src="/assets/images/balon.png"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className={`pointer-events-none absolute z-0 w-[300px] max-w-none object-contain mix-blend-screen blur-[0.9px] transition-[transform,opacity,right,bottom] duration-1000 ease-out md:w-[400px] ${BALL_STATES[activeScene] ?? BALL_STATES[0]}`}
+          style={{
+            maskImage: "radial-gradient(circle at center, black 38%, transparent 76%)",
+            WebkitMaskImage: "radial-gradient(circle at center, black 50%, transparent 90%)",
+          }}
+        />
+
+        <div className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12 w-full">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div className="z-10">
               <div className="flex items-center gap-2 mb-4">

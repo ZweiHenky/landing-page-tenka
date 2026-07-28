@@ -2,12 +2,23 @@
 import HeroVisual from "@/components/react/HeroVisual"
 ---
 
-<section class="relative min-h-screen flex items-center overflow-hidden">
-  <div class="absolute inset-0 bg-grid opacity-50" />
-  <div class="absolute top-1/3 left-1/4 w-96 h-96 bg-cyan/5 rounded-full blur-3xl" />
-  <div class="absolute bottom-1/3 right-1/4 w-64 h-64 bg-cyan-dark/10 rounded-full blur-3xl" />
-  <h1 id="hero-h1-ssr" class="sr-only" aria-hidden="false">
-    Gestiona tu liga deportiva desde cualquier lugar
-  </h1>
-  <HeroVisual client:load />
+<section id="hero" class="relative min-h-screen overflow-hidden bg-black" aria-label="Tenka, el ecosistema digital de tu liga">
+  <picture aria-hidden="true">
+    <source srcset="/assets/images/fondo-mobile.jpg" media="(max-width: 768px)" />
+    <img
+      src="/assets/images/fondo-desktop.png"
+      alt=""
+      class="absolute inset-0 h-full w-full scale-[1.03] object-cover contrast-[0.92] saturate-[0.72] blur-[0.5px]"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </picture>
+  <div class="pointer-events-none absolute inset-0 bg-black/60" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(9,11,16,0.32)_0%,rgba(9,11,16,0.62)_48%,rgba(9,11,16,0.94)_100%)]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/90" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute left-1/2 top-[46%] h-[48rem] w-[48rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan/[0.035] blur-3xl" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -bottom-28 left-1/2 h-56 w-[110%] -translate-x-1/2 rounded-[50%] bg-cyan/[0.025] blur-3xl" aria-hidden="true"></div>
+  <div class="relative z-10 w-full">
+    <HeroVisual client:load />
+  </div>
 </section>

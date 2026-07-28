@@ -65,8 +65,19 @@ const TYPES = [
 
 export default function MatchTypes() {
   return (
-    <section id="tipos-partido" className="py-20 md:py-28">
-      <div className="max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12">
+    <section id="tipos-partido" className="relative overflow-x-clip overflow-y-visible py-20 md:py-28">
+      <img
+        src="/assets/images/barrida.jpeg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-[8%] -right-[24%] z-0 w-[360px] max-w-none object-contain opacity-[0.14] mix-blend-screen blur-[0.3px] sm:bottom-[6%] sm:-right-[22%] md:-right-[8%] md:w-[520px] md:opacity-[0.18] lg:-right-[4%] lg:w-[580px]"
+        style={{
+          maskImage: "radial-gradient(ellipse at center, black 34%, transparent 78%)",
+          WebkitMaskImage: "radial-gradient(ellipse at center, black 34%, transparent 78%)",
+        }}
+      />
+
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12">
         <div className="text-center mb-14">
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white">
             Cada partido tiene su propósito

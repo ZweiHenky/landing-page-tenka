@@ -1,272 +1,192 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "motion/react"
-import { cn } from "@/utils/cn"
-import { TABLA_POSICIONES, EQUIPOS, LIGAS, JORNADAS } from "@/data/demo"
+import { useEffect, useRef } from "react"
+import { motion, useReducedMotion } from "motion/react"
+import FloatingKeyword, { type FloatingKeywordProps } from "./FloatingKeyword"
+import PhoneMockup from "./PhoneMockup"
+
+const PHONE_KEYWORDS: FloatingKeywordProps[] = [
+  {
+    label: "Partidos",
+    position: "left-0 top-[24%] sm:left-[3%] lg:-left-[2%]",
+    variant: "glass",
+    size: "lg",
+    opacity: "strong",
+    depth: 0.95,
+    duration: 5.8,
+    delay: -3.1,
+    distance: 9,
+    rotation: -1,
+    horizontalDelay: -0.7,
+    context: "match",
+    tooltipPosition: "left-0 top-full mt-3",
+  },
+  {
+    label: "Jugadores",
+    position: "right-0 top-[16%] sm:right-[3%] lg:-right-[1%]",
+    variant: "glass",
+    size: "md",
+    opacity: "strong",
+    depth: 0.8,
+    duration: 6.8,
+    delay: -4.4,
+    distance: 10,
+    rotation: 1,
+    horizontalDelay: -2.4,
+    horizontalReverse: true,
+    context: "player",
+    tooltipPosition: "right-0 top-full mt-3",
+  },
+  {
+    label: "Posiciones",
+    position: "bottom-[20%] left-[1%] sm:left-[5%] lg:-left-[3%]",
+    variant: "glass",
+    size: "md",
+    opacity: "strong",
+    depth: 0.75,
+    duration: 6.1,
+    delay: -1.7,
+    distance: 8,
+    rotation: 1,
+    horizontalDelay: -4.1,
+    context: "standings",
+    tooltipPosition: "bottom-full left-0 mb-3",
+  },
+  {
+    label: "Jornadas",
+    position: "right-0 top-[47%] sm:right-[1%] lg:-right-[4%]",
+    variant: "glass",
+    size: "md",
+    opacity: "strong",
+    depth: 0.55,
+    duration: 7.2,
+    delay: -0.8,
+    distance: 7,
+    rotation: -1,
+    horizontalDelay: -5.8,
+    horizontalReverse: true,
+    context: "round",
+    tooltipPosition: "right-0 top-full mt-3",
+  },
+  {
+    label: "Resultados",
+    position: "bottom-[14%] right-[1%] sm:bottom-[16%] sm:right-[2%] lg:-right-[2%]",
+    variant: "glass",
+    size: "md",
+    opacity: "strong",
+    depth: 0.45,
+    duration: 8,
+    delay: -5.1,
+    distance: 6,
+    horizontalDelay: -7.2,
+    context: "result",
+    tooltipPosition: "bottom-full right-0 mb-3",
+  },
+]
 
 export default function HeroVisual() {
-  const [mounted, setMounted] = useState(false)
-  const [showNotif, setShowNotif] = useState(false)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef<number | null>(null)
+  const reduceMotion = useReducedMotion()
 
-  useEffect(() => {
-    setMounted(true)
-    const ssrH1 = document.getElementById('hero-h1-ssr')
-    if (ssrH1) ssrH1.remove()
-    const t1 = setTimeout(() => setShowNotif(true), 1200)
-    const interval = setInterval(() => {
-      setShowNotif(false)
-      setTimeout(() => setShowNotif(true), 200)
-    }, 5000)
-    return () => { clearTimeout(t1); clearInterval(interval) }
+  useEffect(() => () => {
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
   }, [])
 
-  if (!mounted) return null
+  const moveLayers = (x: number, y: number) => {
+    heroRef.current?.querySelectorAll<HTMLElement>("[data-depth]").forEach((element) => {
+      const depth = Number(element.dataset.depth ?? 0)
+      element.style.setProperty("--parallax-x", `${x * depth * 12}px`)
+      element.style.setProperty("--parallax-y", `${y * depth * 9}px`)
+    })
+  }
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (reduceMotion || event.pointerType === "touch") return
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = (event.clientX - rect.left) / rect.width - 0.5
+    const y = (event.clientY - rect.top) / rect.height - 0.5
+
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
+    frameRef.current = requestAnimationFrame(() => moveLayers(x, y))
+  }
+
+  const handlePointerLeave = () => {
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
+    frameRef.current = requestAnimationFrame(() => moveLayers(0, 0))
+  }
 
   return (
-    <div className="relative w-full max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12 pt-32 pb-20 md:pb-32">
-      {/* Desktop glow */}
-      <div
-        className="hidden lg:block absolute right-[8%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle at center, rgba(77,208,225,0.08), transparent 60%)" }}
-      />
+    <div
+      ref={heroRef}
+      className="relative mx-auto grid min-h-[100svh] w-full max-w-[1280px] items-center gap-8 px-6 pb-16 pt-28 md:px-8 md:pb-20 md:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-12"
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+    >
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, x: -24 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.65, ease: [0, 0, 0.2, 1] }}
+        className="relative z-30 mx-auto max-w-2xl text-center lg:mx-0 lg:text-left"
+      >
+        <div className="mb-6 flex items-center justify-center gap-2 lg:justify-start">
+          <span className="h-2 w-2 rounded-full bg-cyan shadow-[0_0_16px_rgba(77,208,225,0.65)]" />
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-text-secondary">
+            El ecosistema digital del fútbol amateur
+          </span>
+        </div>
 
-      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 xl:gap-16">
-        {/* Text */}
-        <div className="lg:w-[45%] xl:w-[48%] shrink-0">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] }}
+        <h1 className="font-display text-4xl leading-[1.08] text-white text-balance sm:text-5xl lg:text-6xl xl:text-7xl">
+          Todo lo que vive tu liga, <span className="text-cyan">conectado a Tenka</span>
+        </h1>
+
+        <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-text-secondary text-balance md:text-lg lg:mx-0">
+          Organiza competencias, publica jornadas y convierte cada equipo y jugador en parte de una comunidad que puede seguirse dentro y fuera de la cancha.
+        </p>
+
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+          <button
+            type="button"
+            disabled
+            className="inline-flex min-h-12 cursor-not-allowed items-center justify-center gap-3 rounded-xl bg-cyan/80 px-6 py-3.5 text-sm font-semibold text-black shadow-[0_0_28px_rgba(77,208,225,0.12)]"
+            aria-label="Descargar la app, próximamente"
           >
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span className="text-xs tracking-[2px] uppercase text-text-secondary font-medium">
-                Plataforma en vivo
-              </span>
-            </div>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 3v12" />
+              <path d="m7 10 5 5 5-5" />
+              <path d="M5 21h14" />
+            </svg>
+            Descargar app
+            <span className="rounded-full bg-black/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider">Próximamente</span>
+          </button>
+          <a
+            href="#precios"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-black/25 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-200 hover:border-cyan/60 hover:bg-cyan/[0.08] hover:text-cyan active:scale-[0.98]"
+          >
+            Ver precios
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14" />
+              <path d="m13 6 6 6-6 6" />
+            </svg>
+          </a>
+        </div>
+      </motion.div>
 
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-tight text-balance">
-              Gestiona tu liga deportiva{" "}
-              <span className="text-cyan">desde cualquier lugar</span>
-            </h1>
-
-            <p className="mt-6 text-text-secondary text-base md:text-lg leading-relaxed max-w-lg">
-              La plataforma que transforma la forma de gestionar ligas deportivas.
-              Programación automática, estadísticas en tiempo real y mucho más.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="#cta"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-black text-base font-semibold rounded-xl hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
-              >
-                Comenzar gratis
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
-              <a
-                href="#demo"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-surface border border-border text-white text-base font-medium rounded-xl hover:border-cyan hover:text-cyan transition-all duration-200 active:scale-[0.97]"
-              >
-                Ver demo
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-              </a>
-            </div>
-
-            <div className="mt-10 flex items-center gap-4">
-              <div className="flex -space-x-3">
-                {EQUIPOS.slice(0, 4).map((e, i) => (
-                  <div
-                    key={e.id}
-                    className="w-9 h-9 rounded-full bg-surface-light border-2 border-black flex items-center justify-center text-xs font-semibold text-text-secondary"
-                    style={{ zIndex: 4 - i }}
-                  >
-                    {e.nombre.charAt(0)}
-                  </div>
-                ))}
-              </div>
-              <p className="text-text-muted text-sm">
-                Únete a <span className="text-white font-semibold">230+</span> equipos
-              </p>
-            </div>
-          </motion.div>
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, x: 24, scale: 0.96 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ duration: 0.7, delay: 0.12, ease: [0, 0, 0.2, 1] }}
+        className="relative z-20 mx-auto flex min-h-[540px] w-full max-w-[480px] items-center justify-center sm:min-h-[610px] lg:min-h-[650px]"
+        aria-label="Vista previa de la aplicación Tenka"
+      >
+        <div className="hero-keyword-parallax relative z-10" data-depth="0.18">
+          <PhoneMockup />
         </div>
 
-        {/* Visual cards — masonry */}
-        <div className="mt-12 lg:mt-0 lg:w-[55%] xl:w-[52%]">
-          <div className="lg:columns-2 lg:gap-5 [column-fill:_balance]">
-            {/* League Info card */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2, ease: [0, 0, 0.2, 1] }}
-              className="break-inside-avoid-column mb-5 bg-surface rounded-2xl border border-border/50 p-5 lg:p-6"
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 rounded-full bg-cyan" />
-                <span className="text-xs font-semibold text-cyan tracking-wide">INFORMACIÓN DE LIGA</span>
-              </div>
-
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl bg-cyan/10 flex items-center justify-center text-2xl lg:text-3xl shrink-0">🏆</div>
-                <div className="min-w-0">
-                  <h4 className="font-display text-lg lg:text-xl text-white truncate">{LIGAS[0]!.nombre}</h4>
-                  <p className="text-sm text-text-muted truncate">{LIGAS[0]!.tipo} · {LIGAS[0]!.categoria}</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-surface-light rounded-xl p-3">
-                  <div className="flex items-center gap-1.5 text-[10px] text-cyan font-semibold uppercase tracking-wide mb-1">
-                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    Días
-                  </div>
-                  <p className="text-sm text-white">Sáb y Dom</p>
-                </div>
-                <div className="bg-surface-light rounded-xl p-3">
-                  <div className="flex items-center gap-1.5 text-[10px] text-cyan font-semibold uppercase tracking-wide mb-1">
-                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polygon points="12 2 22 7 12 12 2 7 12 2" />
-                      <polyline points="2 12 12 17 22 12" />
-                      <polyline points="2 17 12 22 22 17" />
-                    </svg>
-                    Divisiones
-                  </div>
-                  <p className="text-sm text-white">3 activas</p>
-                </div>
-                <div className="bg-surface-light rounded-xl p-3">
-                  <div className="flex items-center gap-1.5 text-[10px] text-cyan font-semibold uppercase tracking-wide mb-1">
-                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
-                    Equipos
-                  </div>
-                  <p className="text-sm text-white">8 inscritos</p>
-                </div>
-                <div className="bg-surface-light rounded-xl p-3">
-                  <div className="flex items-center gap-1.5 text-[10px] text-cyan font-semibold uppercase tracking-wide mb-1">
-                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                      <line x1="16" y1="2" x2="16" y2="6" />
-                      <line x1="8" y1="2" x2="8" y2="6" />
-                      <line x1="3" y1="10" x2="21" y2="10" />
-                    </svg>
-                    Próxima
-                  </div>
-                  <p className="text-sm text-white">{JORNADAS[3]?.fecha ?? "31 Ago"}</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Standings card */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.35, ease: [0, 0, 0.2, 1] }}
-              className="break-inside-avoid-column mb-5 bg-surface rounded-2xl border border-border/50 p-5 lg:p-6"
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <svg className="w-4 h-4 text-cyan" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z" />
-                </svg>
-                <span className="text-xs font-semibold text-cyan tracking-wide">POSICIONES</span>
-              </div>
-
-              <div className="flex text-[10px] text-text-muted font-semibold pb-1.5 mb-1.5 border-b border-border/50">
-                <span className="w-5 text-center">#</span>
-                <span className="flex-1">EQUIPO</span>
-                <span className="w-7 text-center">PJ</span>
-                <span className="w-7 text-center">DG</span>
-                <span className="w-8 text-center font-bold">PTS</span>
-              </div>
-              {TABLA_POSICIONES.slice(0, 4).map((r, i) => (
-                <div
-                  key={r.pos}
-                  className={cn(
-                    "flex items-center text-xs py-1.5",
-                    i === 0 ? "text-cyan font-semibold" : "text-text-secondary",
-                  )}
-                >
-                  <span className="w-5 text-center">{r.pos}</span>
-                  <span className="flex-1 truncate">{r.nombre}</span>
-                  <span className="w-7 text-center">{r.pj}</span>
-                  <span className={cn("w-7 text-center", r.dg < 0 && "text-danger")}>
-                    {r.dg > 0 ? `+${r.dg}` : r.dg}
-                  </span>
-                  <span className={cn("w-8 text-center font-bold", i === 0 && "text-cyan")}>{r.pts}</span>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Horario card */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.45, ease: [0, 0, 0.2, 1] }}
-              className="break-inside-avoid-column mb-5 bg-surface rounded-2xl border border-border/50 p-5 lg:p-6"
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <svg className="w-4 h-4 text-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-                <span className="text-xs font-semibold text-cyan tracking-wide">PRÓXIMOS PARTIDOS</span>
-              </div>
-
-              <div className="space-y-2.5">
-                {[
-                  { hora: "Sáb 16:00", local: "Águilas", visitante: "Leones" },
-                  { hora: "Dom 14:00", local: "Genix", visitante: "Tiburones" },
-                  { hora: "Dom 16:00", local: "Dragones", visitante: "Mi Equipo" },
-                ].map((p, i) => (
-                  <div key={i} className="flex items-center text-sm">
-                    <span className="text-[10px] text-cyan font-medium w-[58px] shrink-0">{p.hora}</span>
-                    <div className="flex items-center flex-1 min-w-0 gap-1.5">
-                      <span className="text-white truncate text-right flex-1">{p.local}</span>
-                      <span className="text-text-muted text-[10px] shrink-0">vs</span>
-                      <span className="text-white truncate flex-1">{p.visitante}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Notification toast */}
-          <AnimatePresence>
-            {showNotif && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
-                className="max-w-md mx-auto bg-surface-light rounded-xl border border-cyan/30 px-4 py-3"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-cyan animate-pulse" />
-                  <div>
-                    <p className="text-xs font-medium text-white">¡Jornada 4 disponible!</p>
-                    <p className="text-[10px] text-text-muted">Ya puedes consultar los partidos</p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
+        {PHONE_KEYWORDS.map((keyword) => (
+          <FloatingKeyword key={keyword.label} {...keyword} />
+        ))}
+      </motion.div>
     </div>
   )
 }

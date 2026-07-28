@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback } from "react"
 import { cn } from "@/utils/cn"
 
 const NAV_ITEMS = [
+  { id: "como-funciona", label: "Cómo funciona" },
+  { id: "funcionalidades", label: "Para quién" },
   { id: "ecosistema", label: "Ecosistema" },
-  { id: "funcionalidades", label: "Funcionalidades" },
   { id: "precios", label: "Precios" },
 ] as const
 
@@ -47,14 +48,21 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-black/80 backdrop-blur-xl border-b border-border/50 py-2"
-          : "bg-transparent py-4",
+          ? "bg-black/80 backdrop-blur-xl border-b border-border/50 pt-5 pb-4"
+          : "bg-transparent pt-7 pb-6",
       )}
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12 flex items-center justify-between">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-cyan" />
-          <span className="font-brand text-lg tracking-wide text-white">TENKA</span>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="relative h-9 w-36 shrink-0 overflow-hidden sm:w-40"
+          aria-label="Ir al inicio"
+        >
+          <img
+            src="/assets/logo-horizontal.png"
+            alt="Tenka"
+            className="absolute left-1/2 top-1/2 w-[180px] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_0_10px_rgba(77,208,225,0.16)] sm:w-[200px]"
+          />
         </button>
 
         <nav className="hidden md:flex items-center gap-1" role="navigation" aria-label="Navegación principal">
@@ -76,12 +84,6 @@ export default function Navbar() {
               )}
             </button>
           ))}
-          <a
-            href="#cta"
-            className="ml-4 px-6 py-2.5 bg-cyan text-black text-sm font-semibold rounded-xl hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
-          >
-            Comenzar
-          </a>
         </nav>
 
         <button
@@ -115,13 +117,6 @@ export default function Navbar() {
                 {label}
               </button>
             ))}
-            <a
-              href="#cta"
-              className="mt-2 w-full text-center px-6 py-3 bg-cyan text-black text-sm font-semibold rounded-xl"
-              onClick={() => setMobileOpen(false)}
-            >
-              Comenzar
-            </a>
           </div>
         </nav>
       )}
