@@ -1,0 +1,117 @@
+---
+interface Props {
+  variant?: "pitch" | "grid" | "sheet"
+  align?: "left" | "right"
+}
+
+const { variant = "grid", align = "right" } = Astro.props
+---
+
+<div class:list={["tactical-background", `tactical-background--${variant}`, `tactical-background--${align}`]} aria-hidden="true">
+  {variant === "pitch" ? (
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+      <rect x="70" y="55" width="1060" height="590" rx="8" />
+      <path d="M600 55v590" />
+      <circle cx="600" cy="350" r="96" />
+      <circle cx="600" cy="350" r="5" class="tactical-dot" />
+      <path d="M70 205h178v290H70M1130 205H952v290h178" />
+      <path d="M70 275h72v150H70M1130 275h-72v150h72" />
+      <path d="M248 270a96 96 0 0 1 0 160M952 270a96 96 0 0 0 0 160" />
+    </svg>
+  ) : (
+    <>
+      <div class="tactical-grid"></div>
+      <div class="tactical-ring"></div>
+      <div class="tactical-index">TENKA / MATCH SYSTEM</div>
+    </>
+  )}
+</div>
+
+<style>
+  .tactical-background {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    contain: paint;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .tactical-background--pitch {
+    color: rgba(125, 231, 242, 0.11);
+  }
+
+  .tactical-background--pitch::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 68% 44%, rgba(77, 208, 225, 0.1), transparent 34%);
+  }
+
+  .tactical-dot {
+    fill: currentColor;
+  }
+
+  .tactical-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.42;
+    background-image:
+      linear-gradient(rgba(77, 208, 225, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(77, 208, 225, 0.055) 1px, transparent 1px);
+    background-size: clamp(40px, 5vw, 72px) clamp(40px, 5vw, 72px);
+    mask-image: linear-gradient(to bottom, transparent, black 18%, black 78%, transparent);
+  }
+
+  .tactical-ring {
+    position: absolute;
+    top: 50%;
+    width: min(62vw, 740px);
+    aspect-ratio: 1;
+    border: 1px solid rgba(77, 208, 225, 0.1);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .tactical-background--right .tactical-ring { right: -22%; }
+  .tactical-background--left .tactical-ring { left: -22%; }
+
+  .tactical-index {
+    position: absolute;
+    right: 2rem;
+    bottom: 1.5rem;
+    color: rgba(176, 186, 201, 0.28);
+    font: 600 10px/1 monospace;
+    letter-spacing: 0.22em;
+  }
+
+  .tactical-background--sheet .tactical-grid {
+    opacity: 0.5;
+    background-image:
+      linear-gradient(rgba(9, 42, 47, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(9, 42, 47, 0.06) 1px, transparent 1px);
+  }
+
+  .tactical-background--sheet .tactical-ring {
+    border-color: rgba(9, 42, 47, 0.1);
+  }
+
+  .tactical-background--sheet .tactical-index {
+    color: rgba(9, 42, 47, 0.38);
+  }
+
+  @media (max-width: 640px) {
+    .tactical-ring { width: 130vw; }
+    .tactical-background--right .tactical-ring { right: -72%; }
+    .tactical-background--left .tactical-ring { left: -72%; }
+    .tactical-index { display: none; }
+  }
+</style>

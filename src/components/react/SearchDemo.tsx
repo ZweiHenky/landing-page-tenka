@@ -100,7 +100,7 @@ export default function SearchDemo() {
                   exit={{ opacity: 0, y: -5 }}
                   className="absolute top-full mt-2 left-0 right-0 bg-surface rounded-2xl border border-border/50 overflow-hidden z-10"
                 >
-                  {LIGAS.slice(0, 3).map((liga, i) => (
+                  {LIGAS.slice(0, 3).map((liga) => (
                     <button
                       key={liga.id}
                       onClick={handleSelect}

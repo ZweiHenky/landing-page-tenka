@@ -4,24 +4,20 @@ import Hero from "@/sections/Hero.astro"
 import Ecosystem from "@/sections/Ecosystem.astro"
 import UserType from "@/sections/UserType.astro"
 import MatchTypeSection from "@/sections/MatchTypeSection.astro"
-import SearchDemo from "@/sections/SearchDemo.astro"
-import DemoStandings from "@/sections/DemoStandings.astro"
 import NarrativeScroll from "@/sections/NarrativeScroll.astro"
 import Pricing from "@/sections/Pricing.astro"
 import FinalCTA from "@/sections/FinalCTA.astro"
 ---
 
 <BaseLayout
-  title="Tenka — Todo lo que vive tu liga, conectado a Tenka | Programación, estadísticas y playoffs"
-  description="Organiza competencias, publica jornadas y convierte cada equipo y jugador en parte de una comunidad que puede seguirse dentro y fuera de la cancha."
+  title="Tenka — Organiza tu liga, conecta cada partido"
+  description="Programación, resultados, posiciones, equipos y playoffs en un solo ecosistema para el fútbol amateur. Únete a la lista de espera de Tenka."
 >
   <Hero />
   <NarrativeScroll />
+  <Ecosystem />
   <UserType />
   <MatchTypeSection />
-  <SearchDemo />
-  <DemoStandings />
-  <Ecosystem />
   <Pricing />
   <FinalCTA />
 </BaseLayout>

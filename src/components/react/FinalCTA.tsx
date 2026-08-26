@@ -1,98 +1,100 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { motion } from "motion/react"
-import { EQUIPOS } from "@/data/demo"
+import { useState } from "react"
 
-const FLOATING_ITEMS = [
-  { icon: "🏆", x: 10, y: 20, size: 40 },
-  { icon: "👥", x: 85, y: 15, size: 36 },
-  { icon: "📊", x: 15, y: 70, size: 32 },
-  { icon: "📅", x: 88, y: 65, size: 34 },
-  { icon: "🏅", x: 50, y: 10, size: 28 },
+type Role = "ORGANIZADOR" | "CAPITAN" | "AFICIONADO"
+type FormState = "idle" | "submitting" | "success" | "error"
+
+const ROLES: Array<{ value: Role; label: string }> = [
+  { value: "ORGANIZADOR", label: "Organizo ligas" },
+  { value: "CAPITAN", label: "Lidero un equipo" },
+  { value: "AFICIONADO", label: "Sigo competencias" },
 ]
 
 export default function FinalCTA() {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [state, setState] = useState<FormState>("idle")
+  const [message, setMessage] = useState("")
+
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setState("submitting")
+    setMessage("")
+
+    const form = event.currentTarget
+    const data = new FormData(form)
+    const apiUrl = import.meta.env.PUBLIC_API_URL?.replace(/\/$/, "")
+
+    if (!apiUrl) {
+      setState("error")
+      setMessage("La lista de espera aún no está conectada. Intenta de nuevo más tarde.")
+      return
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/api/waitlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "omit",
+        body: JSON.stringify({
+          email: data.get("email"),
+          role: data.get("role"),
+          source: "LANDING_FINAL_CTA",
+          consent: data.get("consent") === "on",
+        }),
+      })
+
+      if (!response.ok) throw new Error("waitlist_request_failed")
+
+      setState("success")
+      setMessage("Estás dentro. Te avisaremos cuando Tenka esté listo.")
+      form.reset()
+    } catch {
+      setState("error")
+      setMessage("No pudimos registrar tu correo. Revisa los datos e intenta nuevamente.")
+    }
+  }
 
   return (
-    <section id="cta" className="relative py-28 md:py-36 overflow-hidden">
-      <div className="absolute inset-0 bg-grid opacity-30" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan/5 rounded-full blur-3xl" />
+    <section id="lista-espera" className="relative overflow-hidden bg-cyan py-24 text-black md:py-32">
+      <div className="pointer-events-none absolute inset-0 opacity-20" aria-hidden="true" style={{ backgroundImage: "linear-gradient(rgba(5,35,39,.24) 1px,transparent 1px),linear-gradient(90deg,rgba(5,35,39,.24) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
+      <div className="pointer-events-none absolute -right-32 top-1/2 h-[520px] w-[520px] -translate-y-1/2 rounded-full border border-black/15" aria-hidden="true" />
+      <div className="relative mx-auto grid max-w-[1280px] gap-12 px-6 md:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-12">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-black/60">06 / Próximo lanzamiento</p>
+          <h2 className="mt-5 max-w-xl font-display text-4xl leading-[1.05] text-black md:text-6xl">Sé parte de la primera jornada.</h2>
+          <p className="mt-5 max-w-lg leading-relaxed text-black/70">Tenka todavía no está disponible. Déjanos tu correo y te avisaremos cuando puedas empezar a organizar, competir y seguir tu liga.</p>
+          <div className="mt-9 flex items-center gap-5 border-t border-black/20 pt-5 text-xs font-medium uppercase tracking-wider text-black/60"><span>Sin descarga todavía</span><span className="h-1 w-1 rounded-full bg-black/40" /><span>Sin tarjeta</span></div>
+        </div>
 
-      {mounted && FLOATING_ITEMS.map((item, i) => (
-        <motion.div
-          key={item.icon}
-          className="absolute pointer-events-none text-2xl"
-          style={{ left: `${item.x}%`, top: `${item.y}%` }}
-          animate={{
-            y: [0, -10, 0],
-            opacity: [0.4, 0.7, 0.4],
-          }}
-          transition={{
-            duration: 4 + i,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.5,
-          }}
-        >
-          {item.icon}
-        </motion.div>
-      ))}
+        <div className="bg-[#091315] p-6 text-white shadow-[0_32px_80px_rgba(5,35,39,.2)] md:p-9">
+          <div className="flex items-start justify-between gap-5 border-b border-white/10 pb-6"><div><p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan">Registro de acceso</p><h3 className="mt-2 font-display text-2xl">Lista de espera</h3></div><span className="font-brand text-5xl text-white/5">T</span></div>
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] }}
-        >
-          <div className="flex justify-center -space-x-3 mb-8">
-            {EQUIPOS.slice(0, 6).map((e, i) => (
-              <motion.div
-                key={e.id}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.08 }}
-                className="w-12 h-12 rounded-full bg-surface-light border-2 border-black flex items-center justify-center text-sm font-bold text-cyan"
-                style={{ zIndex: 6 - i }}
-              >
-                {e.nombre.charAt(0)}
-              </motion.div>
-            ))}
-          </div>
+          <form className="mt-7" onSubmit={handleSubmit}>
+            <label htmlFor="waitlist-email" className="text-xs font-medium text-text-secondary">Correo electrónico</label>
+            <input id="waitlist-email" name="email" type="email" maxLength={254} autoComplete="email" required placeholder="tu@correo.com" className="mt-2 min-h-12 w-full border border-white/15 bg-white/[.06] px-4 text-sm text-white outline-none transition placeholder:text-text-muted focus:border-cyan" />
 
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white text-balance max-w-2xl mx-auto">
-            Todas las piezas de tu liga en un solo lugar
-          </h2>
-          <p className="mt-4 text-text-secondary text-base max-w-lg mx-auto">
-            Únete a los organizadores que ya transformaron su liga con Tenka.
-          </p>
+            <fieldset className="mt-6">
+              <legend className="text-xs font-medium text-text-secondary">¿Cómo vivirías Tenka?</legend>
+              <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                {ROLES.map((role, index) => (
+                  <label key={role.value} className="cursor-pointer border border-white/10 bg-white/[.04] p-3 text-xs text-text-secondary transition has-[:checked]:border-cyan has-[:checked]:bg-cyan/10 has-[:checked]:text-cyan">
+                    <input className="sr-only" type="radio" name="role" value={role.value} defaultChecked={index === 0} />
+                    {role.label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a
-              href="#"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-black text-base font-semibold rounded-xl hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
-            >
-              Comenzar ahora
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <a
-              href="#"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-surface border border-border text-white text-base font-medium rounded-xl hover:border-cyan hover:text-cyan transition-all duration-200 active:scale-[0.97]"
-            >
-              Ver precios
-            </a>
-          </div>
+            <label className="mt-6 flex items-start gap-3 text-xs leading-relaxed text-text-muted">
+              <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 accent-cyan" />
+              <span>Acepto que Tenka use mi correo para avisarme sobre el lanzamiento. Puedo retirar mi consentimiento en cualquier momento.</span>
+            </label>
 
-          <p className="mt-4 text-text-muted text-xs">
-            $149 MXN / división / mes · Sin costo oculto
-          </p>
-        </motion.div>
+            <button type="submit" disabled={state === "submitting"} className="mt-7 flex min-h-12 w-full items-center justify-between bg-cyan px-5 text-sm font-semibold text-black transition hover:bg-cyan-bright disabled:cursor-wait disabled:opacity-60"><span>{state === "submitting" ? "Registrando..." : "Quiero enterarme del lanzamiento"}</span><span aria-hidden="true">→</span></button>
+            {message && <p role="status" aria-live="polite" className={`mt-4 text-sm ${state === "success" ? "text-success" : "text-danger"}`}>{message}</p>}
+            <p className="mt-4 text-[11px] text-text-muted">Consulta nuestro <a href="/aviso-de-privacidad" className="text-cyan hover:underline">Aviso de Privacidad</a>.</p>
+          </form>
+        </div>
       </div>
     </section>
   )

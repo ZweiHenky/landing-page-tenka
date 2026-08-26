@@ -1,7 +1,3 @@
-"use client"
-
-import { useEffect, useRef } from "react"
-import { motion, useReducedMotion } from "motion/react"
 import FloatingKeyword, { type FloatingKeywordProps } from "./FloatingKeyword"
 import PhoneMockup from "./PhoneMockup"
 
@@ -85,97 +81,53 @@ const PHONE_KEYWORDS: FloatingKeywordProps[] = [
 ]
 
 export default function HeroVisual() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const frameRef = useRef<number | null>(null)
-  const reduceMotion = useReducedMotion()
-
-  useEffect(() => () => {
-    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
-  }, [])
-
-  const moveLayers = (x: number, y: number) => {
-    heroRef.current?.querySelectorAll<HTMLElement>("[data-depth]").forEach((element) => {
-      const depth = Number(element.dataset.depth ?? 0)
-      element.style.setProperty("--parallax-x", `${x * depth * 12}px`)
-      element.style.setProperty("--parallax-y", `${y * depth * 9}px`)
-    })
-  }
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (reduceMotion || event.pointerType === "touch") return
-    const rect = event.currentTarget.getBoundingClientRect()
-    const x = (event.clientX - rect.left) / rect.width - 0.5
-    const y = (event.clientY - rect.top) / rect.height - 0.5
-
-    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
-    frameRef.current = requestAnimationFrame(() => moveLayers(x, y))
-  }
-
-  const handlePointerLeave = () => {
-    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
-    frameRef.current = requestAnimationFrame(() => moveLayers(0, 0))
-  }
-
   return (
     <div
-      ref={heroRef}
       className="relative mx-auto grid min-h-[100svh] w-full max-w-[1280px] items-center gap-8 px-6 pb-16 pt-28 md:px-8 md:pb-20 md:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-12"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
     >
-      <motion.div
-        initial={reduceMotion ? false : { opacity: 0, x: -24 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.65, ease: [0, 0, 0.2, 1] }}
+      <div
         className="relative z-30 mx-auto max-w-2xl text-center lg:mx-0 lg:text-left"
       >
         <div className="mb-6 flex items-center justify-center gap-2 lg:justify-start">
           <span className="h-2 w-2 rounded-full bg-cyan shadow-[0_0_16px_rgba(77,208,225,0.65)]" />
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-text-secondary">
-            El ecosistema digital del fútbol amateur
+            Próximo lanzamiento · México
           </span>
         </div>
 
         <h1 className="font-display text-4xl leading-[1.08] text-white text-balance sm:text-5xl lg:text-6xl xl:text-7xl">
-          Todo lo que vive tu liga, <span className="text-cyan">conectado a Tenka</span>
+          Tu liga deja de vivir <span className="text-cyan">en mensajes sueltos.</span>
         </h1>
 
         <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-text-secondary text-balance md:text-lg lg:mx-0">
-          Organiza competencias, publica jornadas y convierte cada equipo y jugador en parte de una comunidad que puede seguirse dentro y fuera de la cancha.
+          Programa jornadas, registra resultados y publica posiciones desde un solo ecosistema diseñado para el fútbol amateur.
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
-          <button
-            type="button"
-            disabled
-            className="inline-flex min-h-12 cursor-not-allowed items-center justify-center gap-3 rounded-xl bg-cyan/80 px-6 py-3.5 text-sm font-semibold text-black shadow-[0_0_28px_rgba(77,208,225,0.12)]"
-            aria-label="Descargar la app, próximamente"
+          <a
+            href="#lista-espera"
+            className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-cyan px-6 py-3.5 text-sm font-semibold text-black shadow-[0_0_28px_rgba(77,208,225,0.16)] transition hover:bg-cyan-bright active:scale-[0.98]"
           >
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M12 3v12" />
-              <path d="m7 10 5 5 5-5" />
-              <path d="M5 21h14" />
+              <path d="M4 4h16v16H4z" />
+              <path d="m4 7 8 6 8-6" />
             </svg>
-            Descargar app
-            <span className="rounded-full bg-black/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider">Próximamente</span>
-          </button>
+            Únete a la lista de espera
+          </a>
           <a
             href="#precios"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-black/25 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-200 hover:border-cyan/60 hover:bg-cyan/[0.08] hover:text-cyan active:scale-[0.98]"
           >
-            Ver precios
+            Ver planes y disponibilidad
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M5 12h14" />
               <path d="m13 6 6 6-6 6" />
             </svg>
           </a>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={reduceMotion ? false : { opacity: 0, x: 24, scale: 0.96 }}
-        animate={{ opacity: 1, x: 0, scale: 1 }}
-        transition={{ duration: 0.7, delay: 0.12, ease: [0, 0, 0.2, 1] }}
+      <div
         className="relative z-20 mx-auto flex min-h-[540px] w-full max-w-[480px] items-center justify-center sm:min-h-[610px] lg:min-h-[650px]"
         aria-label="Vista previa de la aplicación Tenka"
       >
@@ -186,7 +138,7 @@ export default function HeroVisual() {
         {PHONE_KEYWORDS.map((keyword) => (
           <FloatingKeyword key={keyword.label} {...keyword} />
         ))}
-      </motion.div>
+      </div>
     </div>
   )
 }

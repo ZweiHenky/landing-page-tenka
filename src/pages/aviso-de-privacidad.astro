@@ -11,14 +11,14 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
     <div class="max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12">
       <div class="max-w-3xl mx-auto">
         <a href="/" class="inline-flex items-center gap-2 text-text-muted hover:text-cyan text-sm transition-colors duration-200 mb-10">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-4 h-4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
             <path d="M19 12H5" /><path d="M12 19l-7-7 7-7" />
           </svg>
           Volver al inicio
         </a>
 
         <h1 class="font-display text-4xl md:text-5xl text-white leading-tight">Aviso de Privacidad</h1>
-        <p class="text-text-muted text-sm mt-2">Última actualización: 3 de agosto de 2026</p>
+        <p class="text-text-muted text-sm mt-2">Última actualización: 24 de agosto de 2026</p>
 
         <div class="mt-12 space-y-10 text-text-secondary text-[15px] leading-relaxed">
           <section>
@@ -42,11 +42,13 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
             <p>Para las finalidades descritas en este aviso, recabamos las siguientes categorías de datos personales:</p>
             <ul class="mt-4 space-y-2 pl-5 list-disc marker:text-cyan">
               <li><strong class="text-white">Datos de identificación y contacto:</strong> nombre, correo electrónico, número de teléfono (verificado mediante un código de un solo uso) y fotografía de perfil.</li>
+              <li><strong class="text-white">Datos de lista de espera:</strong> correo electrónico, rol de interés, origen del formulario y fecha y versión del consentimiento otorgado para recibir noticias del lanzamiento.</li>
               <li><strong class="text-white">Datos de cuenta:</strong> rol dentro de la plataforma (capitán, liga o administrador).</li>
               <li><strong class="text-white">Datos del perfil deportivo:</strong> nombre, posición, fotografía, edad (opcional), dorsal y número de teléfono, cuya visibilidad pública depende de la configuración que elijas.</li>
               <li><strong class="text-white">Datos de ligas y equipos:</strong> nombre de liga, nombre de equipo, escudo, categoría, división, cancha o sede y ubicación (estado y municipio).</li>
               <li><strong class="text-white">Datos de actividad deportiva:</strong> resultados de partidos, anotaciones, estadísticas, tablas de posiciones, árbitros, premios y rendimiento histórico.</li>
               <li><strong class="text-white">Datos técnicos de conexión:</strong> dirección IP y agente de usuario asociados a tu sesión, necesarios para la seguridad y el correcto funcionamiento de la plataforma.</li>
+              <li><strong class="text-white">Datos de compra futuros:</strong> si habilitamos suscripciones, podremos recibir identificadores de compra, recibos y estado de la suscripción necesarios para verificarla. Tenka no recaba directamente los datos completos de tu tarjeta.</li>
             </ul>
           </section>
 
@@ -60,12 +62,14 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
               <li>Generar estadísticas, tablas de posiciones y reportes de rendimiento.</li>
               <li>Enviarte notificaciones push sobre las jornadas de las divisiones que sigues y los cambios de horario.</li>
               <li>Proporcionar soporte técnico y atención a tus solicitudes.</li>
+              <li>Registrar tu solicitud en la lista de espera y enviarte información relacionada con el lanzamiento de Tenka cuando otorgues tu consentimiento.</li>
               <li>Garantizar la seguridad y el correcto funcionamiento de la plataforma.</li>
+              <li>Si se habilitan compras, verificar recibos y el estado de la suscripción, asignar la capacidad contratada y atender aclaraciones de facturación.</li>
             </ul>
 
             <h3 class="font-medium text-white mt-5 mb-2">Finalidades secundarias (no necesarias)</h3>
             <ul class="space-y-2 pl-5 list-disc marker:text-cyan">
-              <li>Enviar comunicaciones sobre nuevas funcionalidades, actualizaciones y promociones.</li>
+              <li>Enviar comunicaciones sobre nuevas funcionalidades, actualizaciones y promociones distintas del aviso de lanzamiento.</li>
               <li>Realizar estudios de comportamiento y análisis estadísticos para mejorar la experiencia de usuario.</li>
               <li>Invitar a participar en encuestas de satisfacción.</li>
             </ul>
@@ -80,6 +84,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
               <li><strong class="text-white">Almacenamiento de imágenes:</strong> Cloudinary, para el alojamiento de las fotografías y escudos que subes a la plataforma.</li>
               <li><strong class="text-white">Notificaciones push:</strong> OneSignal, que recibe el identificador de tu dispositivo y, cuando estás registrado, un identificador de tu cuenta para entregarte las notificaciones que solicitas.</li>
               <li><strong class="text-white">Monitoreo de errores:</strong> Sentry, que procesa únicamente datos técnicos sobre fallos de la plataforma y, por defecto, no recibe información personal.</li>
+              <li><strong class="text-white">Compras y suscripciones futuras:</strong> actualmente no transferimos datos para esta finalidad porque las compras no están habilitadas. Si se habilitan, Apple o Google podrán procesar la compra conforme a sus propios avisos, y RevenueCat podrá procesar identificadores de compra, recibos y estado de la suscripción para que Tenka verifique y administre el acceso contratado.</li>
               <li><strong class="text-white">Autoridades competentes:</strong> cuando sea requerido por ley o mandato judicial.</li>
             </ul>
             <p class="mt-3">En ningún caso comercializamos ni compartimos tus datos personales con terceros con fines de publicidad sin tu consentimiento expreso.</p>
@@ -88,7 +93,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
           <section>
             <h2 class="font-display text-xl text-white mb-3">5. Conservación de datos personales</h2>
             <p>
-              Conservaremos tus datos personales mientras dure la relación jurídica que estableces con nosotros al utilizar la plataforma y durante el periodo adicional que exija la normativa aplicable. Una vez que dejen de ser necesarios para las finalidades descritas, serán suprimidos.
+              Conservaremos tus datos personales mientras dure la relación jurídica que estableces con nosotros al utilizar la plataforma y durante el periodo adicional que exija la normativa aplicable. Los registros de la lista de espera se conservarán hasta el lanzamiento, hasta que retires tu consentimiento o hasta que dejen de ser necesarios para informarte sobre el acceso a Tenka. Una vez que dejen de ser necesarios para las finalidades descritas, serán suprimidos.
             </p>
           </section>
 

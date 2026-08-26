@@ -68,6 +68,13 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  .section-kicker {
+    color: var(--color-cyan);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
   .hero-keyword-parallax {
     --parallax-x: 0px;
     --parallax-y: 0px;
@@ -111,6 +118,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

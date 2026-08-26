@@ -12,6 +12,22 @@
 			"continue": true
 		},
 		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/equipo(?:/(.*?))?/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/liga(?:/(.*?))?/?$",
+			"dest": "_render"
+		},
+		{
 			"src": "^/.*$",
 			"dest": "/404.html",
 			"status": 404

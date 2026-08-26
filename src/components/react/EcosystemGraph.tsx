@@ -97,7 +97,6 @@ export default function EcosystemGraph() {
   }, [inView])
 
   const getNode = (id: string) => NODE_LAYOUT.find((n) => n.id === id)
-  const isConnected = (id: string) => CONEXIONES.some(([a, b]) => a === id || b === id)
   const isConnectedToActive = (id: string) =>
     activeNode && CONEXIONES.some(([a, b]) => (a === activeNode && b === id) || (b === activeNode && a === id))
 
@@ -116,6 +115,7 @@ export default function EcosystemGraph() {
         <div className="relative max-w-2xl mx-auto aspect-square">
           <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.2 }}>
             {CONEXIONES.map(([from, to], i) => {
+              if (!from || !to) return null
               const a = getNode(from)
               const b = getNode(to)
               if (!a || !b) return null

@@ -7,8 +7,11 @@ const NAV_ITEMS = [
   { id: "como-funciona", label: "Cómo funciona" },
   { id: "funcionalidades", label: "Para quién" },
   { id: "ecosistema", label: "Ecosistema" },
-  { id: "precios", label: "Precios" },
+  { id: "precios", label: "Planes" },
 ] as const
+
+const getScrollBehavior = (): ScrollBehavior =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -38,7 +41,7 @@ export default function Navbar() {
   const scrollTo = useCallback((id: string) => {
     const el = document.getElementById(id)
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" })
+      el.scrollIntoView({ behavior: getScrollBehavior(), block: "start" })
       setMobileOpen(false)
     }
   }, [])
@@ -54,18 +57,21 @@ export default function Navbar() {
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12 flex items-center justify-between">
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => window.scrollTo({ top: 0, behavior: getScrollBehavior() })}
           className="relative h-9 w-36 shrink-0 overflow-hidden sm:w-40"
           aria-label="Ir al inicio"
         >
           <img
-            src="/assets/logo-horizontal.png"
+            src="/assets/logo-horizontal.webp"
             alt="Tenka"
+            width="400"
+            height="267"
             className="absolute left-1/2 top-1/2 w-[180px] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_0_10px_rgba(77,208,225,0.16)] sm:w-[200px]"
           />
         </button>
 
-        <nav className="hidden md:flex items-center gap-1" role="navigation" aria-label="Navegación principal">
+        <div className="hidden md:flex items-center gap-3">
+        <nav className="flex items-center gap-1" role="navigation" aria-label="Navegación principal">
           {NAV_ITEMS.map(({ id, label }) => (
             <button
               key={id}
@@ -85,6 +91,8 @@ export default function Navbar() {
             </button>
           ))}
         </nav>
+        <a href="#lista-espera" className="ml-2 inline-flex items-center bg-cyan px-4 py-2.5 text-xs font-semibold text-black transition hover:bg-cyan-bright">Lista de espera</a>
+        </div>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -117,6 +125,7 @@ export default function Navbar() {
                 {label}
               </button>
             ))}
+            <a href="#lista-espera" onClick={() => setMobileOpen(false)} className="mt-2 bg-cyan px-4 py-3 text-center text-sm font-semibold text-black">Únete a la lista de espera</a>
           </div>
         </nav>
       )}

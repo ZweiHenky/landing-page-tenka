@@ -50,8 +50,6 @@ export default function UserTypeTabs() {
     target?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" })
   }
 
-  const user = USUARIOS[active]!
-
   return (
     <section id="funcionalidades" className="py-20 md:py-28 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-6 md:px-8 lg:px-12">
@@ -70,7 +68,7 @@ export default function UserTypeTabs() {
           className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-4 -mx-6 md:-mx-8 lg:-mx-12 px-6 md:px-8 lg:px-12 scrollbar-hide"
         >
           {USUARIOS.map((u, i) => {
-            const Icon = ICONS[i]
+            const Icon = ICONS[i] ?? ICONS[0]!
             const isActive = i === active
 
             return (

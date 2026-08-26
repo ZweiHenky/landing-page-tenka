@@ -1,5 +1,38 @@
 ---
-import PricingCards from "@/components/react/PricingCards"
+import TacticalBackground from "@/components/TacticalBackground.astro"
+
+const freeFeatures = ["1 liga", "1 división total", "Hasta 40 equipos propios", "Jornadas, resultados y posiciones"]
 ---
 
-<PricingCards client:visible />
+<section id="precios" class="relative overflow-hidden bg-[#0a0f14] py-24 md:py-32">
+  <TacticalBackground variant="grid" align="right" />
+  <div class="relative mx-auto max-w-[1280px] px-6 md:px-8 lg:px-12">
+    <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+      <div><p class="section-kicker">05 / Planes y disponibilidad</p><h2 class="mt-5 font-display text-3xl leading-tight text-white md:text-5xl">Empieza con lo esencial. <span class="text-cyan">Crece con claridad.</span></h2></div>
+      <p class="max-w-xl leading-relaxed text-text-secondary lg:justify-self-end">Tenka aún no está disponible. Al lanzamiento podrás comenzar con un plan gratuito; las capacidades pagadas llegarán después.</p>
+    </div>
+
+    <div class="mt-14 grid gap-4 lg:grid-cols-[1.05fr_1.45fr]">
+      <article class="border border-cyan/35 bg-[#0f2023] p-6 md:p-8">
+        <div class="flex items-start justify-between gap-4"><div><span class="text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan">Al lanzamiento</span><h3 class="mt-3 font-display text-3xl text-white">Gratis</h3></div><span class="font-brand text-5xl text-cyan/10">01</span></div>
+        <p class="mt-3 text-sm text-text-secondary">Una base completa para comenzar a organizar.</p>
+        <ul class="mt-8 space-y-3">{freeFeatures.map((feature) => <li class="flex items-center gap-3 text-sm text-white"><span class="h-1.5 w-1.5 bg-cyan"></span>{feature}</li>)}</ul>
+        <a href="#lista-espera" class="mt-9 flex items-center justify-between bg-cyan px-5 py-4 text-sm font-semibold text-black"><span>Únete a la lista de espera</span><span>→</span></a>
+      </article>
+
+      <article class="border border-white/10 bg-[#121820]/90 p-6 md:p-8">
+        <div class="flex flex-col gap-5 border-b border-white/10 pb-7 sm:flex-row sm:items-start sm:justify-between">
+          <div><span class="text-[10px] font-semibold uppercase tracking-[0.18em] text-text-muted">Capacidad mensual · Próximamente</span><h3 class="mt-3 font-display text-2xl text-white">De 2 a 15 divisiones</h3><p class="mt-2 max-w-lg text-sm leading-relaxed text-text-secondary">Elige una capacidad fija y compártela entre todas las ligas que administras.</p></div>
+          <span class="shrink-0 border border-white/10 px-3 py-2 text-xs text-text-muted">Sin precio publicado</span>
+        </div>
+        <div class="mt-8">
+          <div class="flex items-center justify-between text-[10px] uppercase tracking-wider text-text-muted"><span>Capacidad</span><span>2 → 15</span></div>
+          <div class="mt-3 grid grid-cols-7 gap-1 sm:grid-cols-14">{Array.from({ length: 14 }, (_, index) => <span class:list={["grid aspect-square place-items-center border text-[10px]", index < 7 ? "border-cyan/30 bg-cyan/10 text-cyan" : "border-white/10 text-text-muted"]}>{index + 2}</span>)}</div>
+        </div>
+        <div class="mt-8 grid gap-px bg-white/10 sm:grid-cols-3"><div class="bg-[#151c25] p-4"><span class="font-brand text-xs text-cyan">01</span><p class="mt-3 text-xs text-text-secondary">Elige el nivel exacto</p></div><div class="bg-[#151c25] p-4"><span class="font-brand text-xs text-cyan">02</span><p class="mt-3 text-xs text-text-secondary">Asigna tus divisiones</p></div><div class="bg-[#151c25] p-4"><span class="font-brand text-xs text-cyan">03</span><p class="mt-3 text-xs text-text-secondary">Amplía cuando lo necesites</p></div></div>
+      </article>
+    </div>
+
+    <p class="mt-5 text-xs text-text-muted">¿Administras más de 15 divisiones? <a class="text-cyan hover:underline" href="mailto:support@tenka.studio?subject=Tenka%20Empresa">Cuéntanos sobre tu organización.</a></p>
+  </div>
+</section>

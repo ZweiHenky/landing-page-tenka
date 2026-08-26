@@ -11,8 +11,9 @@ export interface Props {
 }
 
 const { title, description, ogImage = "/assets/icon.png", noindex = false } = Astro.props
-const canonical = new URL(Astro.url.pathname, Astro.site).href
-const ogUrl = `${Astro.site.origin}${ogImage}`
+const site = Astro.site ?? new URL("https://tenka.studio")
+const canonical = new URL(Astro.url.pathname, site).href
+const ogUrl = `${site.origin}${ogImage}`
 ---
 
 <!doctype html>
@@ -56,41 +57,24 @@ const ogUrl = `${Astro.site.origin}${ogImage}`
 
     <!-- Structured Data -->
     {!noindex ? (
-      <script type="application/ld+json" set:html={JSON.stringify({
+      <script is:inline type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@graph": [
           {
             "@type": "Organization",
-            "@id": `${Astro.site.origin}#organization`,
+            "@id": `${site.origin}#organization`,
             "name": "Tenka",
-            "url": Astro.site.origin,
-            "logo": `${Astro.site.origin}/assets/icon.png`,
+            "url": site.origin,
+            "logo": `${site.origin}/assets/icon.png`,
             "areaServed": "MX",
             "inLanguage": "es-MX",
           },
           {
             "@type": "WebSite",
-            "@id": `${Astro.site.origin}#website`,
-            "url": Astro.site.origin,
+            "@id": `${site.origin}#website`,
+            "url": site.origin,
             "name": "Tenka",
-            "publisher": { "@id": `${Astro.site.origin}#organization` },
-            "inLanguage": "es-MX",
-          },
-          {
-            "@type": "SoftwareApplication",
-            "@id": `${Astro.site.origin}#application`,
-            "name": "Tenka",
-            "description": "Plataforma de gestión de ligas y torneos de fútbol",
-            "url": Astro.site.origin,
-            "applicationCategory": "SportsApplication",
-            "operatingSystem": "Android, iOS",
-            "offers": {
-              "@type": "Offer",
-              "price": "149",
-              "priceCurrency": "MXN",
-              "availability": "https://schema.org/OnlineOnly",
-            },
-            "areaServed": "MX",
+            "publisher": { "@id": `${site.origin}#organization` },
             "inLanguage": "es-MX",
           },
         ],

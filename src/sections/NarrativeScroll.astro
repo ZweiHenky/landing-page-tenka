@@ -1,5 +1,82 @@
 ---
-import NarrativeScroller from "@/components/react/NarrativeScroller"
+import TacticalBackground from "@/components/TacticalBackground.astro"
+
+const steps = [
+  { number: "01", label: "Programa", text: "Publica jornadas y define sedes desde un solo lugar." },
+  { number: "02", label: "Registra", text: "Captura el marcador y conserva el historial del partido." },
+  { number: "03", label: "Actualiza", text: "La tabla refleja puntos, diferencia y posiciones al instante." },
+]
+
+const table = [
+  { pos: 1, name: "Fckhaztor", pj: 6, pts: 15 },
+  { pos: 2, name: "Lobos del Norte", pj: 6, pts: 13 },
+  { pos: 3, name: "Titanes FC", pj: 6, pts: 10 },
+]
 ---
 
-<NarrativeScroller client:visible />
+<section id="como-funciona" class="relative overflow-hidden bg-[#0b1117] py-24 md:py-32">
+  <TacticalBackground variant="grid" align="right" />
+  <div class="relative mx-auto max-w-[1280px] px-6 md:px-8 lg:px-12">
+    <div class="grid items-end gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div>
+        <p class="section-kicker">01 / Flujo de competencia</p>
+        <h2 class="mt-5 max-w-xl font-display text-3xl leading-tight text-white md:text-5xl">
+          De la jornada a la tabla, <span class="text-cyan">sin perder el hilo.</span>
+        </h2>
+        <p class="mt-5 max-w-lg leading-relaxed text-text-secondary">
+          Tenka conecta la operación diaria de la liga. Un resultado no termina en una hoja suelta: alimenta la competencia completa.
+        </p>
+      </div>
+
+      <ol class="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
+        {steps.map((step) => (
+          <li class="bg-[#101820] p-5 md:p-6">
+            <span class="font-brand text-xs tracking-[0.2em] text-cyan">{step.number}</span>
+            <h3 class="mt-8 font-display text-lg text-white">{step.label}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-text-secondary">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="relative mt-16 grid gap-4 lg:grid-cols-[0.82fr_1.18fr]">
+      <div class="border border-white/10 bg-[#111a22]/95 p-5 md:p-7">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan">Jornada 06</p>
+            <p class="mt-1 text-sm text-text-muted">Cancha Norte · 19:30</p>
+          </div>
+          <span class="border border-success/30 bg-success/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-success">Final</span>
+        </div>
+        <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4 py-9 text-center">
+          <div><span class="mx-auto flex h-12 w-12 items-center justify-center border border-cyan/25 bg-cyan/10 font-brand text-cyan">F</span><p class="mt-3 text-sm text-white">Fckhaztor</p></div>
+          <div><p class="font-display text-4xl text-white">5<span class="mx-2 text-text-muted">:</span>4</p><p class="mt-2 text-[10px] uppercase tracking-[0.18em] text-text-muted">Marcador</p></div>
+          <div><span class="mx-auto flex h-12 w-12 items-center justify-center border border-white/10 bg-white/5 font-brand text-white">E</span><p class="mt-3 text-sm text-white">Eclipse</p></div>
+        </div>
+        <div class="flex items-center justify-between border-t border-white/10 pt-4 text-xs text-text-muted">
+          <span>Resultado registrado</span><span class="text-cyan">Tabla recalculada →</span>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden border border-cyan/20 bg-[#0d2023] p-5 md:p-7">
+        <div class="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-cyan/10 blur-3xl" aria-hidden="true"></div>
+        <div class="relative flex items-start justify-between gap-6">
+          <div><p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan">Posiciones</p><h3 class="mt-2 font-display text-2xl text-white">Primera A</h3></div>
+          <span class="font-brand text-5xl text-white/5">J06</span>
+        </div>
+        <div class="relative mt-8">
+          <div class="grid grid-cols-[2rem_1fr_2.5rem_2.5rem] border-b border-cyan/15 pb-2 text-[10px] uppercase tracking-wider text-text-muted"><span>#</span><span>Equipo</span><span>PJ</span><span>PTS</span></div>
+          {table.map((team) => (
+            <div class="grid grid-cols-[2rem_1fr_2.5rem_2.5rem] items-center border-b border-white/[0.07] py-4 text-sm last:border-0">
+              <span class="font-brand text-cyan">{team.pos}</span><span class="font-medium text-white">{team.name}</span><span class="text-text-muted">{team.pj}</span><span class="font-semibold text-white">{team.pts}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <svg class="pointer-events-none absolute left-[35%] top-1/2 hidden h-16 w-32 -translate-y-1/2 lg:block" viewBox="0 0 128 64" fill="none" aria-hidden="true">
+        <path d="M2 52C36 52 37 12 73 12h48" stroke="#4DD0E1" stroke-width="1.5" stroke-dasharray="4 5" />
+        <path d="m116 7 7 5-7 5" stroke="#4DD0E1" stroke-width="1.5" />
+      </svg>
+    </div>
+  </div>
+</section>

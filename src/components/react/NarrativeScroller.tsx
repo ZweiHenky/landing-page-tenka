@@ -72,7 +72,7 @@ export default function NarrativeScroller() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const scene = SCENES[activeScene]
+  const scene = SCENES[activeScene] ?? SCENES[0]!
 
   return (
     <section id="como-funciona" ref={containerRef} className="relative" style={{ minHeight: `${SCENES.length * 100}vh` }}>

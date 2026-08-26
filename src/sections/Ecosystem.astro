@@ -1,5 +1,52 @@
 ---
-import EcosystemGraph from "@/components/react/EcosystemGraph"
+import TacticalBackground from "@/components/TacticalBackground.astro"
+
+const nodes = [
+  { label: "Divisiones", detail: "Reglas y categorías", className: "left-[15%] top-[22%]" },
+  { label: "Equipos", detail: "Plantillas conectadas", className: "left-[24%] top-[70%]" },
+  { label: "Tenka", detail: "Centro de operación", className: "left-1/2 top-1/2 featured" },
+  { label: "Jornadas", detail: "Partidos y sedes", className: "left-[76%] top-[27%]" },
+  { label: "Estadísticas", detail: "Posiciones e historial", className: "left-[82%] top-[72%]" },
+]
 ---
 
-<EcosystemGraph client:visible />
+<section id="ecosistema" class="relative overflow-hidden bg-[#0c1a19] py-24 md:py-32">
+  <TacticalBackground variant="pitch" />
+  <div class="relative mx-auto grid max-w-[1280px] items-center gap-14 px-6 md:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:px-12">
+    <div>
+      <p class="section-kicker">02 / Ecosistema conectado</p>
+      <h2 class="mt-5 font-display text-3xl leading-tight text-white md:text-5xl">La información juega <span class="text-cyan">en el mismo equipo.</span></h2>
+      <p class="mt-5 max-w-lg leading-relaxed text-text-secondary">Liga, divisiones, equipos y jornadas comparten una sola estructura. Cambias el resultado una vez y todos consultan la misma versión.</p>
+      <div class="mt-8 grid grid-cols-2 gap-px border border-white/10 bg-white/10">
+        <div class="bg-[#102220] p-4"><p class="font-brand text-2xl text-cyan">01</p><p class="mt-1 text-xs text-text-muted">Fuente de verdad</p></div>
+        <div class="bg-[#102220] p-4"><p class="font-brand text-2xl text-cyan">24/7</p><p class="mt-1 text-xs text-text-muted">Consulta pública</p></div>
+      </div>
+    </div>
+
+    <div class="relative min-h-[430px] border border-cyan/15 bg-[#081412]/55 md:min-h-[540px]">
+      <svg class="absolute inset-0 h-full w-full" viewBox="0 0 700 540" fill="none" aria-hidden="true">
+        <path d="M350 270 105 120M350 270 168 400M350 270 532 142M350 270 574 404" stroke="#4DD0E1" stroke-opacity=".48" stroke-dasharray="6 8" />
+        <circle cx="350" cy="270" r="130" stroke="#4DD0E1" stroke-opacity=".13" />
+        <circle cx="350" cy="270" r="210" stroke="#4DD0E1" stroke-opacity=".07" />
+      </svg>
+      <div class="absolute inset-0">
+        {nodes.map((node) => (
+          <div class:list={["ecosystem-node absolute -translate-x-1/2 -translate-y-1/2", node.className]}>
+            <span class="node-marker"></span>
+            <p class="mt-3 font-display text-sm text-white md:text-base">{node.label}</p>
+            <p class="mt-1 hidden text-[10px] text-text-muted sm:block">{node.detail}</p>
+          </div>
+        ))}
+      </div>
+      <p class="absolute bottom-4 left-5 font-brand text-[10px] uppercase tracking-[0.24em] text-cyan/60">Data formation / 2–1–2</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ecosystem-node { width: 8.5rem; text-align: center; }
+  .node-marker { display: block; width: 2.75rem; height: 2.75rem; margin: 0 auto; border: 1px solid rgba(77, 208, 225, .35); background: rgba(77, 208, 225, .1); transform: rotate(45deg); box-shadow: 0 0 24px rgba(77, 208, 225, .08); }
+  .featured .node-marker { width: 4rem; height: 4rem; border-color: #4dd0e1; background: #4dd0e1; box-shadow: 0 0 42px rgba(77, 208, 225, .22); }
+  .featured .node-marker::after { content: "T"; display: grid; place-items: center; height: 100%; color: #081412; font: 700 1.25rem/1 "Space Grotesk", sans-serif; transform: rotate(-45deg); }
+  @media (max-width: 480px) { .ecosystem-node { width: 6rem; } }
+</style>

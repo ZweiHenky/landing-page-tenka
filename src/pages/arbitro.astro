@@ -1,5 +1,4 @@
 ---
-const token = Astro.url.hash
 ---
 
 <!doctype html>
@@ -87,16 +86,16 @@ const token = Astro.url.hash
         <img src="/assets/icon.png" alt="Tenka" style="width: 64px; height: 64px; margin-bottom: 16px;" />
       <h1>Enlace para árbitro</h1>
       <p>
-        Este enlace debe abrirse en la aplicación de Tenka.
-        Si no tienes la app instalada, descárgala desde la tienda.
+        Este enlace solo funciona para árbitros que ya participan en las pruebas de Tenka. La aplicación aún no está disponible públicamente.
       </p>
-      <a href="tenka://arbitro{token}" class="btn">
+      <a href="tenka://arbitro" class="btn">
         Abrir en Tenka
       </a>
+      <a href="/#lista-espera" class="store-link">Únete a la lista de espera</a>
       <script>
         const hash = window.location.hash;
-        const link = document.querySelector('.btn');
-        if (hash) {
+        const link = document.querySelector<HTMLAnchorElement>('.btn');
+        if (hash && link) {
           link.href = 'tenka://arbitro' + hash;
         }
       </script>
