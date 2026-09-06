@@ -1,0 +1,73 @@
+---
+import TacticalBackground from "@/components/TacticalBackground.astro"
+
+const features = [
+  {
+    number: "01",
+    title: "Calendarios y jornadas",
+    text: "Genera rondas, organiza horarios y sedes, y detecta conflictos antes de publicar.",
+    label: "Planificación",
+  },
+  {
+    number: "02",
+    title: "Resultados y posiciones",
+    text: "Captura cada marcador y deja que la tabla calcule puntos, diferencia y posiciones.",
+    label: "Automatización",
+  },
+  {
+    number: "03",
+    title: "Equipos y jugadores",
+    text: "Mantén plantillas conectadas a cada división e incorpora equipos mediante invitaciones QR.",
+    label: "Participantes",
+  },
+  {
+    number: "04",
+    title: "Goleadores y partidos",
+    text: "Publica goleadores, alineaciones, marcadores, penales y el detalle de cada encuentro.",
+    label: "Estadísticas",
+  },
+  {
+    number: "05",
+    title: "Playoffs y eliminatorias",
+    text: "Construye llaves visuales y sigue cada cruce desde la primera ronda hasta la final.",
+    label: "Competencia",
+  },
+  {
+    number: "06",
+    title: "Árbitros y publicación",
+    text: "Asigna árbitros y comparte con tu comunidad una versión pública siempre actualizada.",
+    label: "Operación",
+  },
+]
+---
+
+<section id="funcionalidades" class="relative overflow-hidden bg-[#0c1a19] py-24 md:py-32">
+  <TacticalBackground variant="pitch" />
+  <div class="relative mx-auto max-w-[1280px] px-6 md:px-8 lg:px-12">
+    <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+      <div>
+        <p class="section-kicker">02 / Funciones</p>
+        <h2 class="mt-5 max-w-xl font-display text-3xl leading-tight text-white md:text-5xl">
+          Todo lo necesario para <span class="text-cyan">gestionar tu liga.</span>
+        </h2>
+      </div>
+      <p class="max-w-xl leading-relaxed text-text-secondary lg:justify-self-end">
+        Desde el primer equipo inscrito hasta la final, Tenka conecta cada parte de la competencia para que administres menos herramientas y tomes mejores decisiones.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-px border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-3">
+      {features.map((feature) => (
+        <article class="group relative min-h-64 overflow-hidden bg-[#0e1d1c] p-6 transition-colors hover:bg-[#112524] md:p-7">
+          <div class="flex items-center justify-between">
+            <span class="font-brand text-xs tracking-[0.18em] text-cyan">{feature.number}</span>
+            <span class="text-[10px] font-semibold uppercase tracking-[0.16em] text-text-muted">{feature.label}</span>
+          </div>
+          <div class="mt-12 h-px w-12 bg-cyan/50 transition-all duration-300 group-hover:w-20"></div>
+          <h3 class="mt-6 font-display text-xl text-white">{feature.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-text-secondary">{feature.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

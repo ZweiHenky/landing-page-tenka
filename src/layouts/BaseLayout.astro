@@ -10,14 +10,14 @@ export interface Props {
   noindex?: boolean
 }
 
-const { title, description, ogImage = "/assets/icon.png", noindex = false } = Astro.props
+const { title, description, ogImage = "/assets/images/fondo-desktop.png", noindex = false } = Astro.props
 const site = Astro.site ?? new URL("https://tenka.studio")
 const canonical = new URL(Astro.url.pathname, site).href
 const ogUrl = `${site.origin}${ogImage}`
 ---
 
 <!doctype html>
-<html lang="es-MX">
+<html lang="es-419">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,22 +38,24 @@ const ogUrl = `${site.origin}${ogImage}`
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:secure_url" content={ogUrl} />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1254" />
-    <meta property="og:image:height" content="1254" />
-    <meta property="og:image:alt" content="Tenka" />
-    <meta property="og:locale" content="es_MX" />
+    <meta property="og:image:width" content="1664" />
+    <meta property="og:image:height" content="928" />
+    <meta property="og:image:alt" content="Tenka, gestor de ligas de fútbol" />
+    <meta property="og:locale" content="es_419" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogUrl} />
-    <meta name="twitter:image:alt" content="Tenka" />
+    <meta name="twitter:image:alt" content="Tenka, gestor de ligas de fútbol" />
 
     <!-- Icons -->
     <link rel="icon" type="image/png" href="/assets/icon.png" />
     <link rel="apple-touch-icon" href="/assets/icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Structured Data -->
     {!noindex ? (
@@ -66,8 +68,10 @@ const ogUrl = `${site.origin}${ogImage}`
             "name": "Tenka",
             "url": site.origin,
             "logo": `${site.origin}/assets/icon.png`,
-            "areaServed": "MX",
-            "inLanguage": "es-MX",
+            "description": "Gestor de ligas de fútbol para organizar calendarios, equipos, resultados, posiciones y playoffs.",
+            "email": "support@tenka.studio",
+            "areaServed": "Latin America",
+            "inLanguage": "es-419",
           },
           {
             "@type": "WebSite",
@@ -75,7 +79,8 @@ const ogUrl = `${site.origin}${ogImage}`
             "url": site.origin,
             "name": "Tenka",
             "publisher": { "@id": `${site.origin}#organization` },
-            "inLanguage": "es-MX",
+            "description": "Software para organizar y publicar ligas de fútbol en Latinoamérica.",
+            "inLanguage": "es-419",
           },
         ],
       })} />

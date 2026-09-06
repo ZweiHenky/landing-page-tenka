@@ -1,23 +1,49 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import Hero from "@/sections/Hero.astro"
-import Ecosystem from "@/sections/Ecosystem.astro"
+import Features from "@/sections/Features.astro"
 import UserType from "@/sections/UserType.astro"
 import MatchTypeSection from "@/sections/MatchTypeSection.astro"
 import NarrativeScroll from "@/sections/NarrativeScroll.astro"
 import Pricing from "@/sections/Pricing.astro"
+import FAQ from "@/sections/FAQ.astro"
 import FinalCTA from "@/sections/FinalCTA.astro"
+
+const site = Astro.site ?? new URL("https://tenka.studio")
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": `${site.origin}/#software`,
+  name: "Tenka",
+  applicationCategory: "BusinessApplication",
+  applicationSubCategory: "Gestor de ligas de fútbol",
+  operatingSystem: "Android, iOS",
+  description: "Software para organizar ligas de fútbol, calendarios, equipos, resultados, posiciones, goleadores y playoffs.",
+  url: site.origin,
+  areaServed: "Latin America",
+  inLanguage: "es-419",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+    availability: "https://schema.org/PreOrder",
+    description: "Plan gratuito previsto para el lanzamiento.",
+  },
+  publisher: { "@id": `${site.origin}/#organization` },
+}
 ---
 
 <BaseLayout
-  title="Tenka — Organiza tu liga, conecta cada partido"
-  description="Programación, resultados, posiciones, equipos y playoffs en un solo ecosistema para el fútbol amateur. Únete a la lista de espera de Tenka."
+  title="Gestor de ligas de fútbol | Calendarios y resultados | Tenka"
+  description="Organiza ligas de fútbol con calendarios, equipos, resultados, posiciones, goleadores y playoffs. Únete al próximo lanzamiento de Tenka en Latinoamérica."
 >
   <Hero />
   <NarrativeScroll />
-  <Ecosystem />
+  <Features />
   <UserType />
   <MatchTypeSection />
   <Pricing />
+  <FAQ />
   <FinalCTA />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
 </BaseLayout>

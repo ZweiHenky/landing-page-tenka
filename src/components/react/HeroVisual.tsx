@@ -91,16 +91,16 @@ export default function HeroVisual() {
         <div className="mb-6 flex items-center justify-center gap-2 lg:justify-start">
           <span className="h-2 w-2 rounded-full bg-cyan shadow-[0_0_16px_rgba(77,208,225,0.65)]" />
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-text-secondary">
-            Próximo lanzamiento · México
+            Próximo lanzamiento · Latinoamérica
           </span>
         </div>
 
         <h1 className="font-display text-4xl leading-[1.08] text-white text-balance sm:text-5xl lg:text-6xl xl:text-7xl">
-          Tu liga deja de vivir <span className="text-cyan">en mensajes sueltos.</span>
+          Gestiona tu liga de fútbol <span className="text-cyan">desde un solo lugar.</span>
         </h1>
 
         <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-text-secondary text-balance md:text-lg lg:mx-0">
-          Programa jornadas, registra resultados y publica posiciones desde un solo ecosistema diseñado para el fútbol amateur.
+          Organiza calendarios, equipos y partidos. Registra resultados y publica posiciones, goleadores y playoffs sin depender de chats u hojas de cálculo.
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
@@ -115,10 +115,10 @@ export default function HeroVisual() {
             Únete a la lista de espera
           </a>
           <a
-            href="#precios"
+            href="#como-funciona"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-black/25 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-200 hover:border-cyan/60 hover:bg-cyan/[0.08] hover:text-cyan active:scale-[0.98]"
           >
-            Ver planes y disponibilidad
+            Descubre cómo funciona
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M5 12h14" />
               <path d="m13 6 6 6-6 6" />

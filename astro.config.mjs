@@ -20,9 +20,6 @@ export default defineConfig({
         !page.includes("/arbitro") &&
         !page.includes("/aviso-de-privacidad") &&
         !page.includes("/terminos-y-condiciones"),
-      lastmod: new Date(),
-      changefreq: "weekly",
-      priority: 1.0,
     }),
   ],
   adapter: vercel(),

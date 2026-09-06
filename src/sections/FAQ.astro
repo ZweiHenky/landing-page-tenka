@@ -1,0 +1,69 @@
+---
+import TacticalBackground from "@/components/TacticalBackground.astro"
+
+const questions = [
+  {
+    question: "¿Qué es Tenka?",
+    answer: "Tenka es un gestor de ligas de fútbol que centraliza calendarios, jornadas, equipos, resultados, posiciones, goleadores y playoffs en una sola plataforma.",
+  },
+  {
+    question: "¿Para qué tipo de competencias sirve?",
+    answer: "Está diseñado para ligas de fútbol amateur con una o varias divisiones. Permite organizar temporadas regulares, partidos amistosos, encuentros complementarios y fases eliminatorias.",
+  },
+  {
+    question: "¿Las posiciones se actualizan automáticamente?",
+    answer: "Sí. Cuando se registra un resultado, Tenka recalcula los puntos, partidos jugados, diferencia de goles y posiciones de la división.",
+  },
+  {
+    question: "¿Los equipos y aficionados pueden consultar la liga?",
+    answer: "Sí. La información publicada puede consultarse desde páginas públicas con próximos partidos, resultados, posiciones, goleadores y llaves de playoffs.",
+  },
+  {
+    question: "¿Tenka ya está disponible?",
+    answer: "Todavía no. Tenka prepara su lanzamiento en Latinoamérica. Puedes unirte a la lista de espera para recibir el aviso de disponibilidad.",
+  },
+  {
+    question: "¿Habrá un plan gratuito?",
+    answer: "Sí. El lanzamiento contempla un plan gratuito para comenzar con una liga y una división, sin necesidad de registrar una tarjeta.",
+  },
+]
+
+const site = Astro.site ?? new URL("https://tenka.studio")
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${site.origin}/#faq`,
+  mainEntity: questions.map(({ question, answer }) => ({
+    "@type": "Question",
+    name: question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: answer,
+    },
+  })),
+}
+---
+
+<section id="preguntas" class="relative overflow-hidden bg-[#e8eeec] py-24 text-[#081313] md:py-32">
+  <TacticalBackground variant="sheet" align="right" />
+  <div class="relative mx-auto grid max-w-[1280px] gap-12 px-6 md:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20 lg:px-12">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#146d76]">06 / Preguntas frecuentes</p>
+      <h2 class="mt-5 font-display text-3xl leading-tight md:text-5xl">Antes de comenzar tu <span class="text-[#167984]">próxima temporada.</span></h2>
+      <p class="mt-5 max-w-md leading-relaxed text-[#405554]">Resolvemos las dudas principales sobre el gestor de ligas y su próximo lanzamiento.</p>
+    </div>
+
+    <div class="border-t border-[#aabdb9]">
+      {questions.map((item, index) => (
+        <details class="group border-b border-[#aabdb9] py-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-5 font-display text-base marker:content-none md:text-lg">
+            <span><span class="mr-4 font-brand text-xs text-[#167984]">0{index + 1}</span>{item.question}</span>
+            <span class="text-2xl font-light text-[#167984] transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <p class="max-w-2xl pb-2 pl-10 pt-4 text-sm leading-relaxed text-[#405554] md:text-base">{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</section>

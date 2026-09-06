@@ -5,9 +5,10 @@ import { cn } from "@/utils/cn"
 
 const NAV_ITEMS = [
   { id: "como-funciona", label: "Cómo funciona" },
-  { id: "funcionalidades", label: "Para quién" },
-  { id: "ecosistema", label: "Ecosistema" },
+  { id: "funcionalidades", label: "Funciones" },
+  { id: "organizadores", label: "Organizadores" },
   { id: "precios", label: "Planes" },
+  { id: "preguntas", label: "Preguntas" },
 ] as const
 
 const getScrollBehavior = (): ScrollBehavior =>

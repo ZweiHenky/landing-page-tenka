@@ -60,9 +60,9 @@ export default function FinalCTA() {
       <div className="pointer-events-none absolute -right-32 top-1/2 h-[520px] w-[520px] -translate-y-1/2 rounded-full border border-black/15" aria-hidden="true" />
       <div className="relative mx-auto grid max-w-[1280px] gap-12 px-6 md:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-12">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-black/60">06 / Próximo lanzamiento</p>
-          <h2 className="mt-5 max-w-xl font-display text-4xl leading-[1.05] text-black md:text-6xl">Sé parte de la primera jornada.</h2>
-          <p className="mt-5 max-w-lg leading-relaxed text-black/70">Tenka todavía no está disponible. Déjanos tu correo y te avisaremos cuando puedas empezar a organizar, competir y seguir tu liga.</p>
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-black/60">07 / Próximo lanzamiento</p>
+          <h2 className="mt-5 max-w-xl font-display text-4xl leading-[1.05] text-black md:text-6xl">Organiza tu próxima liga con Tenka.</h2>
+          <p className="mt-5 max-w-lg leading-relaxed text-black/70">Déjanos tu correo y te avisaremos cuando el gestor de ligas esté disponible en Latinoamérica.</p>
           <div className="mt-9 flex items-center gap-5 border-t border-black/20 pt-5 text-xs font-medium uppercase tracking-wider text-black/60"><span>Sin descarga todavía</span><span className="h-1 w-1 rounded-full bg-black/40" /><span>Sin tarjeta</span></div>
         </div>
 
@@ -74,7 +74,7 @@ export default function FinalCTA() {
             <input id="waitlist-email" name="email" type="email" maxLength={254} autoComplete="email" required placeholder="tu@correo.com" className="mt-2 min-h-12 w-full border border-white/15 bg-white/[.06] px-4 text-sm text-white outline-none transition placeholder:text-text-muted focus:border-cyan" />
 
             <fieldset className="mt-6">
-              <legend className="text-xs font-medium text-text-secondary">¿Cómo vivirías Tenka?</legend>
+              <legend className="text-xs font-medium text-text-secondary">¿Cuál es tu relación con la liga?</legend>
               <div className="mt-3 grid gap-2 sm:grid-cols-3">
                 {ROLES.map((role, index) => (
                   <label key={role.value} className="cursor-pointer border border-white/10 bg-white/[.04] p-3 text-xs text-text-secondary transition has-[:checked]:border-cyan has-[:checked]:bg-cyan/10 has-[:checked]:text-cyan">

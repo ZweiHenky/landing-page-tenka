@@ -86,7 +86,7 @@ function ContextContent({ type }: { type: ContextCard }) {
       <div className="min-w-0">
         <p className="truncate text-sm font-semibold text-white">Alex Mendoza</p>
         <p className="text-xs text-text-muted">Lobos FC · Delantero</p>
-        <p className="mt-1 text-[11px] text-cyan">8 goles · 5 asistencias</p>
+        <p className="mt-1 text-[11px] text-cyan">8 goles · Líder de goleo</p>
       </div>
     </div>
   )

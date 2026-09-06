@@ -1,18 +1,18 @@
 ---
 import TacticalBackground from "@/components/TacticalBackground.astro"
 
-const organizerFeatures = ["Programa jornadas", "Registra resultados", "Administra divisiones", "Publica posiciones"]
+const organizerFeatures = ["Menos trabajo manual", "Información centralizada", "Publicación inmediata", "Consulta pública"]
 ---
 
-<section id="funcionalidades" class="relative overflow-hidden bg-[#e8eeec] py-24 text-[#081313] md:py-32">
+<section id="organizadores" class="relative overflow-hidden bg-[#e8eeec] py-24 text-[#081313] md:py-32">
   <TacticalBackground variant="sheet" align="left" />
   <div class="relative mx-auto max-w-[1280px] px-6 md:px-8 lg:px-12">
     <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
       <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#146d76]">03 / Cada rol, su vista</p>
-        <h2 class="mt-5 font-display text-3xl leading-tight md:text-5xl">Una competencia.<br /><span class="text-[#167984]">Tres formas de vivirla.</span></h2>
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#146d76]">03 / Para organizadores</p>
+        <h2 class="mt-5 font-display text-3xl leading-tight md:text-5xl">Menos administración.<br /><span class="text-[#167984]">Más fútbol.</span></h2>
       </div>
-      <p class="max-w-xl text-base leading-relaxed text-[#405554] lg:justify-self-end">El organizador controla la operación, el capitán mantiene a su equipo listo y el aficionado encuentra la información sin perseguir mensajes.</p>
+      <p class="max-w-xl text-base leading-relaxed text-[#405554] lg:justify-self-end">Tenka convierte el trabajo diario del organizador en información útil para capitanes, jugadores y aficionados, sin cadenas interminables de mensajes.</p>
     </div>
 
     <div class="mt-14 grid gap-4 lg:grid-cols-[1.25fr_0.75fr]">
@@ -21,8 +21,8 @@ const organizerFeatures = ["Programa jornadas", "Registra resultados", "Administ
         <div class="relative grid gap-10 md:grid-cols-[0.82fr_1.18fr]">
           <div>
             <span class="inline-flex border border-cyan/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan">Organizador</span>
-            <h3 class="mt-6 font-display text-3xl">Tu centro de control</h3>
-            <p class="mt-3 text-sm leading-relaxed text-text-secondary">Decisiones claras desde la programación hasta la tabla final.</p>
+            <h3 class="mt-6 font-display text-3xl">Tu liga bajo control</h3>
+            <p class="mt-3 text-sm leading-relaxed text-text-secondary">Gestiona desde la programación inicial hasta la final desde una sola plataforma.</p>
             <ul class="mt-7 grid grid-cols-2 gap-3">
               {organizerFeatures.map((feature, index) => <li class="border-l border-cyan/40 pl-3 text-xs text-text-secondary"><span class="mr-2 font-brand text-cyan">0{index + 1}</span>{feature}</li>)}
             </ul>
@@ -38,12 +38,12 @@ const organizerFeatures = ["Programa jornadas", "Registra resultados", "Administ
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
         <article class="border border-[#b9c8c4] bg-[#f4f7f5]/90 p-6">
           <div class="flex items-start justify-between"><span class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#167984]">Capitán</span><span class="font-brand text-3xl text-[#0b2929]/10">C</span></div>
-          <h3 class="mt-8 font-display text-xl">El equipo siempre listo</h3>
-          <p class="mt-2 text-sm leading-relaxed text-[#526564]">Plantilla, invitaciones QR y próximos partidos en una vista.</p>
+          <h3 class="mt-8 font-display text-xl">Equipos informados</h3>
+          <p class="mt-2 text-sm leading-relaxed text-[#526564]">Los capitanes consultan plantillas, invitaciones y próximos partidos.</p>
         </article>
         <article class="border border-[#b9c8c4] bg-[#dce8e5]/90 p-6">
           <div class="flex items-start justify-between"><span class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#167984]">Aficionado</span><span class="font-brand text-3xl text-[#0b2929]/10">A</span></div>
-          <h3 class="mt-8 font-display text-xl">Encuentra y sigue</h3>
+          <h3 class="mt-8 font-display text-xl">Información pública</h3>
           <div class="mt-4 flex items-center gap-3 border border-[#aabdb9] bg-white/60 px-3 py-2 text-xs text-[#647674]"><span>⌕</span><span>Liga, equipo o jugador...</span></div>
         </article>
       </div>
